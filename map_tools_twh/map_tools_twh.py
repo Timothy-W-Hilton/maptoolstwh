@@ -2,9 +2,12 @@
 
 currently provides:
 
+class Livermore_prj
 class NA_124x124_satellite_prj
 class mapper
+class Livermore_Mapper
 class NA_124x124_mapper
+class CoastalSEES_WRF_Mapper
 """
 
 from matplotlib.figure import Figure
@@ -12,6 +15,45 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg
 from matplotlib.backends.backend_pdf import FigureCanvasPdf
 
 import cartopy.crs as ccrs
+
+
+class Fig(Figure):
+    """Subclass of matplotlib.figure.Figure; provides one-line saving
+    matplotlib.figure.Figure requires some boilerplate to save a
+    figure outside of matplotlib.pyplot.  Using pyplot often doesn't
+    play well with detaching and reattaching screen sessions because
+    screen loses its connection to $DISPLAY.  This class allows
+    one-line figure saving independent of platform and $DISPLAY.
+    """
+    def savefig(self, dpi=150, fname="figure.pdf"):
+        """save the object's map to an image file
+        """
+        from matplotlib.backends.backend_agg import FigureCanvasAgg
+        from matplotlib.backends.backend_pdf import FigureCanvasPdf
+        if fname.endswith((".pdf", ".PDF")):
+            canvas = FigureCanvasPdf(self)
+        elif fname.endswith((".png", ".PNG")):
+            canvas = FigureCanvasAgg(self)
+        else:
+            raise(IOError(('unrecognized figure type.'
+                           '  pdf or png are supported')))
+        # The size * the dpi gives the final image sys.getsizeof()
+        #   a4"x4" image * 80 dpi ==> 320x320 pixel image
+        canvas.print_figure(fname, dpi=dpi)
+
+
+class Livermore_prj(ccrs.AlbersEqualArea):
+    """projection centered over Livermore, California, USA.
+
+    shows most of the San Francisco Bay Area.
+    """
+    def __init__(self):
+        """constructor
+        """
+        # center the projection at Livermore, California, USA (37.681873
+        # N, 118.0353 W)
+        super(Livermore_prj, self).__init__(central_latitude=37.681873,
+                                            central_longitude=118.0353)
 
 
 class CoastalSEES_WRF_prj(ccrs.AlbersEqualArea):
@@ -68,7 +110,8 @@ class mapper(object):
     """
     def __init__(self,
                  prj=None,
-                 ax=None):
+                 ax=None,
+                 res='50m'):
         """define projection and axes for the map.
 
         ARGS:
@@ -80,6 +123,8 @@ class mapper(object):
            ax (:class: `~cartopy.mpl.geoaxes.GeoAxes` instance): the
               axes on which to plot the map.  Optional; if unspecified a
               figure and axes are created.
+
+           res (string): ("110m" | {"50m"} | "10m")
         """
         if ax is None:
             if prj is None:
@@ -92,7 +137,7 @@ class mapper(object):
             # TODO: check for type cartopy.mpl.geoaxes.GeoAxes
             self.ax = ax
             self.fig = ax.get_figure()
-        self.ax.coastlines('50m')
+        self.ax.coastlines(res)
         self.ax.set_global()
         self.ax.gridlines(ylocs=range(0, 90, 15),
                           xlocs=range(-180, -50, 15),
@@ -127,7 +172,8 @@ class mapper(object):
         zorder (int): order (top to bottom) to plot the pcolormesh
         **kwargs: passed through to matplotlib.axes.Axes.pcolormesh
         """
-        self.quiv = self.ax.quiver(lon, lat, U, V, transform=ccrs.PlateCarree(),
+        self.quiv = self.ax.quiver(lon, lat, U, V,
+                                   transform=ccrs.PlateCarree(),
                                    zorder=zorder,
                                    **kwargs)
 
@@ -185,6 +231,25 @@ class mapper(object):
         # The size * the dpi gives the final image sys.getsizeof()
         #   a4"x4" image * 80 dpi ==> 320x320 pixel image
         canvas.print_figure(fname, dpi=dpi)
+
+
+class Livermore_Mapper(mapper):
+    """provides a figure, axes to plot data on the Livermore, CA, USA domain
+    """
+    def __init__(self,
+                 prj=Livermore_prj(),
+                 ax=None,
+                 domain=2):
+        super(Livermore_Mapper, self).__init__(prj=prj, ax=ax, res="10m")
+        self.ax.set_extent((-125.03729, -118.61932, 35.113796, 40.192265))
+
+    def set_extent(self, **kwargs):
+        """set the axes "extent"
+
+        All keywords are passed through to :class:
+           ~cartopy.mpl.geoaxes.GeoAxes.set_extent()
+        """
+        super(self.ax, self).set_extent(**kwargs)
 
 
 class CoastalSEES_WRF_Mapper(mapper):
