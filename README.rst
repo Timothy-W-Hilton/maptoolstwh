@@ -26,32 +26,33 @@ framework for plotting data on maps with cartopy, matplotlib
 Installation
 ------------
 
-This package is registered on the `Python Package Index (PyPI)`_
-as map_tools_twh_.
+..
+   This package is registered on the `Python Package Index (PyPI)`_
+   as map_tools_twh_.
 
-Add this line to your application's requirements.txt
+   Add this line to your application's requirements.txt
 
-::
+   ::
 
-    map_tools_twh
+       map_tools_twh
 
-and install it with
+   and install it with
 
-::
+   ::
 
-    $ pip install -r requirements.txt
+       $ pip install -r requirements.txt
 
-If you are writing a Python package which will depend on this,
-add this to your requirements in ``setup.py``.
+   If you are writing a Python package which will depend on this,
+   add this to your requirements in ``setup.py``.
 
-Alternatively, install it directly using pip with
+   Alternatively, install it directly using pip with
 
-::
+   ::
 
-    $ pip install map_tools_twh
+       $ pip install map_tools_twh
 
-.. _map_tools_twh: https://pypi.python.org/pypi/map-tools-twh
-.. _Python Package Index (PyPI): https://pypi.python.org/
+   .. _map_tools_twh: https://pypi.python.org/pypi/map-tools-twh
+   .. _Python Package Index (PyPI): https://pypi.python.org/
 
 Development and Testing
 -----------------------
