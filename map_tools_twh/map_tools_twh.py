@@ -158,6 +158,13 @@ class mapper(object):
                                            zorder=zorder,
                                            **kwargs)
 
+    def scatter(self, lon, lat, **kwargs):
+        """plot points over the object's map instance
+        """
+        self.ax.scatter(lon, lat,
+                        transform=ccrs.PlateCarree(),
+                        **kwargs)
+
     def quiver(self, lon, lat, U, V, zorder=1, **kwargs):
         """plot vectors over the object's map instance
 
