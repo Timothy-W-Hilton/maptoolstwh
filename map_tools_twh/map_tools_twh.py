@@ -53,7 +53,7 @@ class Livermore_prj(ccrs.AlbersEqualArea):
         # center the projection at Livermore, California, USA (37.681873
         # N, 118.0353 W)
         super(Livermore_prj, self).__init__(central_latitude=37.681873,
-                                            central_longitude=118.0353)
+                                            central_longitude=-118.0353)
 
 
 class CoastalSEES_WRF_prj(ccrs.AlbersEqualArea):
