@@ -239,6 +239,14 @@ class mapper(object):
         #   a4"x4" image * 80 dpi ==> 320x320 pixel image
         canvas.print_figure(fname, dpi=dpi)
 
+    def set_extent(self, **kwargs):
+        """set the axes "extent"
+
+        All keywords are passed through to :class:
+           ~cartopy.mpl.geoaxes.GeoAxes.set_extent()
+        """
+        super(self.ax, self).set_extent(**kwargs)
+
 
 class Livermore_Mapper(mapper):
     """provides a figure, axes to plot data on the Livermore, CA, USA domain
@@ -250,14 +258,6 @@ class Livermore_Mapper(mapper):
         super(Livermore_Mapper, self).__init__(prj=prj, ax=ax, res="10m")
         self.ax.set_extent((-125.03729, -118.61932, 35.113796, 40.192265))
 
-    def set_extent(self, **kwargs):
-        """set the axes "extent"
-
-        All keywords are passed through to :class:
-           ~cartopy.mpl.geoaxes.GeoAxes.set_extent()
-        """
-        super(self.ax, self).set_extent(**kwargs)
-
 
 class CoastalSEES_WRF_Mapper(mapper):
     """provides a figure, axes to plot data on the Coastal SEES domain
@@ -265,20 +265,20 @@ class CoastalSEES_WRF_Mapper(mapper):
     def __init__(self,
                  prj=CoastalSEES_WRF_prj(),
                  ax=None,
-                 domain=2):
-        super(CoastalSEES_WRF_Mapper, self).__init__(prj=prj, ax=ax)
+                 domain=2,
+                 res='50m'):
+        super(CoastalSEES_WRF_Mapper, self).__init__(prj=prj, ax=ax, res=res)
         if domain == 2:
             self.ax.set_extent((-135.75792, -116.1489, 33.368294, 50.319572))
         if domain == 1:
             self.ax.set_extent((-172.32204, -82.677979, 14.0, 64.575523))
-
-    def set_extent(self, **kwargs):
-        """set the axes "extent"
-
-        All keywords are passed through to :class:
-           ~cartopy.mpl.geoaxes.GeoAxes.set_extent()
-        """
-        super(self.ax, self).set_extent(**kwargs)
+        if domain == "bigbasin":
+            # zoom in on the San Francisco -- Monterey area
+            # SF_lat = 37.7749
+            # SF_lon = -122.4194
+            # MontereyCA_lat = 36.6002
+            # MontereyCA_lon = -121.8947
+            self.ax.set_extent((-123.0, -121.0, 36.2, 38.0))
 
 
 class NA_124x124_mapper(mapper):
