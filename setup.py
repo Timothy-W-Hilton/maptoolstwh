@@ -7,7 +7,7 @@ setup(
     name='map-tools-twh',
     version='0.0',
     author='Timothy W. Hilton',
-    author_email='thilton@ucmerced.edu',
+    author_email='thilton@ucsc.edu',
     packages=find_packages(exclude=['docs']),
     url='https://github.com/Timothy-W-Hilton/maptoolstwh',
     license='MIT',
