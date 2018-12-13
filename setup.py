@@ -13,6 +13,9 @@ setup(
     license='MIT',
     description='framework for plotting data on maps with cartopy, matplotlib',
     long_description=long_description,
+    package_data={
+        '': ['IGBP_modMODIS_veg_PFTs_table.dat']
+    },
     install_requires=[
     ]
 )
