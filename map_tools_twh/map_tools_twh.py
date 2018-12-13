@@ -269,9 +269,12 @@ class CoastalSEES_WRF_Mapper(mapper):
                  res='50m'):
         super(CoastalSEES_WRF_Mapper, self).__init__(prj=prj, ax=ax, res=res)
         if domain == 2:
-            self.ax.set_extent((-135.75792, -116.1489, 33.368294, 50.319572))
+            # OSU domain
+            # self.ax.set_extent((-135.75792, -116.1489, 33.368294, 50.319572))
+            # whole California domain (padded to nearest 1/2 degree)
+            self.ax.set_extent((-134.0, -112.5, 31.0, 50.0))
         if domain == 1:
-            self.ax.set_extent((-172.32204, -82.677979, 14.0, 64.575523))
+            self.ax.set_extent((-149.5, -82.5, 17.0, 58.5))
         if domain == "bigbasin":
             # zoom in on the San Francisco -- Monterey area
             # SF_lat = 37.7749
