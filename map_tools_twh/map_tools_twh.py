@@ -283,6 +283,10 @@ class CoastalSEES_WRF_Mapper(mapper):
             # MontereyCA_lat = 36.6002
             # MontereyCA_lon = -121.8947
             self.ax.set_extent((-123.0, -121.0, 36.2, 38.0))
+        if domain == "SoCal":
+            # lon/lat bounding box for Southern California
+            bbox_SoCal = (-120.0, -116.0, 32.0, 35.0)
+            self.ax.set_extent(bbox_SoCal)
 
 
 class NA_124x124_mapper(mapper):
