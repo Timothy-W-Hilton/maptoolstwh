@@ -1,7 +1,7 @@
 PFTnum,long_name,color_str,color_hex
 1,EvergreenNeedleleafForest,Green,#3cb44b
 2,EvergreenBroadleafForest,Lime,#bfef45
-3,DeciduousNeedleleafForest,Olive,#1F188A
+3,DeciduousNeedleleafForest,Olive,#808000
 4,DeciduousBroadleafForest,Mint,#aaffc3
 5,MixedForests,Teal,#469990
 6,ClosedShrublands,Brown,#9A6324
