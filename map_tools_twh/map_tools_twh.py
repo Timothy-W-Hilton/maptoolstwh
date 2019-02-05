@@ -322,16 +322,27 @@ class NA_124x124_mapper(mapper):
         """
         super(NA_124x124_mapper, self).__init__(prj=prj, ax=ax)
 
+
 def get_IGBP_modMODIS_21Category_PFTs_table():
+    """get colors, names for 21-category IGBP modified MODIS land categories
+
+    read color table from IGBP_modMODIS_veg_PFTs_table.dat (part of
+    package data)
+    """
+    color_table = read_csv(resource_stream(
+        __name__,
+        'IGBP_modMODIS_veg_PFTs_table.dat'))
+    return(color_table)
+
+
+def get_IGBP_modMODIS_21Category_PFTs_cmap():
     """get colormap for 21-category IGBP modified MODIS land categories
 
     read color table from IGBP_modMODIS_veg_PFTs_table.dat (part of
     package data)
 
     """
-    color_table = read_csv(resource_stream(
-        __name__,
-        'IGBP_modMODIS_veg_PFTs_table.dat'))
+    color_table = get_IGBP_modMODIS_21Category_PFTs_table()
     colors_rgba = np.array(list(map(to_rgba, color_table['color_hex'].values)))
     land_categories_cmap = ListedColormap(colors_rgba)
     return(land_categories_cmap)
