@@ -290,6 +290,11 @@ class CoastalSEES_WRF_Mapper(mapper):
             # lon/lat bounding box for Southern California
             bbox_SoCal = (-120.0, -116.0, 32.0, 35.0)
             self.ax.set_extent(bbox_SoCal)
+        if domain == "redwoods":
+            # lon/lat bounding box for Sequioa Sempervirens range
+            (-124.5, -114, 31.5, 42.5)
+            bbox_redwoods = ((-124.5, -121, 35.7, 42.5))
+            self.ax.set_extent(bbox_redwoods)
 
 
 class NA_124x124_mapper(mapper):
