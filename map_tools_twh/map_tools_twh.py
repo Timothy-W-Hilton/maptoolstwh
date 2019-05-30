@@ -21,6 +21,7 @@ import cartopy.crs as ccrs
 from pandas import read_csv
 import numpy as np
 
+
 class Fig(Figure):
     """Subclass of matplotlib.figure.Figure; provides one-line saving
     matplotlib.figure.Figure requires some boilerplate to save a
@@ -104,6 +105,16 @@ class NA_124x124_satellite_prj(ccrs.NearsidePerspective):
             central_latitude=central_latitude,
             satellite_height=satellite_height,
             **kwargs)
+
+
+class Yatir_WRF_prj(ccrs.AlbersEqualArea):
+    """projection centered over Yatir Forest, Isreal
+    """
+    def __init__(self):
+        """constructor
+        """
+        super(Yatir_WRF_prj, self).__init__(central_latitude=31.345315,
+                                            central_longitude=35.052224)
 
 
 class mapper(object):
@@ -329,6 +340,18 @@ class NA_124x124_mapper(mapper):
               figure and axes are created.
         """
         super(NA_124x124_mapper, self).__init__(prj=prj, ax=ax)
+
+
+class Yatir_WRF_Mapper(mapper):
+    """provides a figure, axes to plot data on the Coastal SEES domain
+    """
+    def __init__(self,
+                 prj=Yatir_WRF_prj(),
+                 ax=None,
+                 domain=2,
+                 res='50m'):
+        super(Yatir_WRF_Mapper, self).__init__(prj=prj, ax=ax, res=res)
+        self.ax.set_extent((20.0, 50.0, 21.0, 41.0))
 
 
 def get_IGBP_modMODIS_21Category_PFTs_table():
