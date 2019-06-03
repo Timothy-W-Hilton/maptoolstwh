@@ -18,6 +18,7 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg
 from matplotlib.backends.backend_pdf import FigureCanvasPdf
 
 import cartopy.crs as ccrs
+import cartopy.feature as cfeature
 from pandas import read_csv
 import numpy as np
 
@@ -351,7 +352,17 @@ class Yatir_WRF_Mapper(mapper):
                  domain=2,
                  res='50m'):
         super(Yatir_WRF_Mapper, self).__init__(prj=prj, ax=ax, res=res)
-        self.ax.set_extent((20.0, 50.0, 21.0, 41.0))
+
+        borders = cfeature.NaturalEarthFeature(
+            category='cultural',
+            name='admin_0_countries',
+            scale='50m',
+            facecolor='none')
+        self.ax.add_feature(borders, edgecolor='black')
+        if domain == 2:
+            self.ax.set_extent((32.0, 38.0, 29.0, 34.0))
+        else:
+            self.ax.set_extent((20.0, 50.0, 21.0, 41.0))
 
 
 def get_IGBP_modMODIS_21Category_PFTs_table():
