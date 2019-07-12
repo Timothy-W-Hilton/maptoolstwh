@@ -174,6 +174,21 @@ class mapper(object):
                                            zorder=zorder,
                                            **kwargs)
 
+    def contourf(self, lon, lat, data, zorder=1, **kwargs):
+        """plot meshgrid visualizing data over the object's map instance
+
+        ARGS:
+        lon (array): 2D array of longitudes
+        lat (array): 2D array of latitude
+        data (array): 2D array of values to plot
+        zorder (int): order (top to bottom) to plot the pcolormesh
+        **kwargs: passed through to matplotlib.axes.Axes.pcolormesh
+        """
+        self.contour_mappable = self.ax.contourf(lon, lat, data,
+                                                 transform=ccrs.PlateCarree(),
+                                                 zorder=zorder,
+                                                 **kwargs)
+
     def scatter(self, lon, lat, **kwargs):
         """plot points over the object's map instance
         """
