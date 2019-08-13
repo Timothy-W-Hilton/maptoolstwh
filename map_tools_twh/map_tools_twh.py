@@ -23,8 +23,18 @@ from pandas import read_csv
 import numpy as np
 
 
+class YatirForest(object):
+    """container class to hold characteristics of Yatir Forest
+    """
+    def __init__(self):
+        self.lat = 31.345315
+        self.lon = 35.052224
+        self.UTM_zone = ''
+
+
 class Fig(Figure):
     """Subclass of matplotlib.figure.Figure; provides one-line saving
+
     matplotlib.figure.Figure requires some boilerplate to save a
     figure outside of matplotlib.pyplot.  Using pyplot often doesn't
     play well with detaching and reattaching screen sessions because
@@ -374,7 +384,11 @@ class Yatir_WRF_Mapper(mapper):
             scale='50m',
             facecolor='none')
         self.ax.add_feature(borders, edgecolor='black')
-        if domain == 2:
+        if domain == 3:
+            yf = YatirForest()
+            self.ax.set_extent((yf.lon - 0.5, yf.lon + 0.5,
+                                yf.lat - 0.5, yf.lat + 0.5))
+        elif domain == 2:
             self.ax.set_extent((32.0, 38.0, 29.0, 34.0))
         else:
             self.ax.set_extent((20.0, 50.0, 21.0, 41.0))
